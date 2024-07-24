@@ -1,4 +1,5 @@
 r=[]
+l=r
 n=int(input("enter number of present students "))
 print("Enter roll number of students")
 for i in range (0,n):
@@ -6,7 +7,6 @@ for i in range (0,n):
     r.append(z)
 
 
-# by linier search
 
 
 s=int(input("Enter the roll number of student to be cheacked"))
@@ -26,29 +26,56 @@ print("No. of steps count = ",(g))
 print("#by binary search")
 
 r.sort()
+
+
 x=0
+left = 0
+right = len(r) - 1
+result =0
+while left <= right:
+    x=x+1
+    mid = left + (right - left) // 2
+    if r[mid] == s:
+        result=1
+        break
+    elif r[mid] < s:
+        left = mid + 1
+    else:
+        right = mid - 1
+    result=0
 
-def bs(r,s):
-    left = 0
-    right = len(r) - 1
-    
-    while left <= right:
-        x=x+1
-        mid = left + (right - left) // 2
-        if r[mid] == s:
-            return (1)
-        elif r[mid] < s:
-            left = mid + 1
-        else:
-            right = mid - 1
-    return 0
 
-
-result=bs(r,s)
 if(result==1):
     print("Student was present")
 else:
     print("Student was not present")
 
 
-print("No. of steps count = ",x)
+print("No. of steps count = ", x)
+
+
+print("#by Sentinal Search")
+
+
+r=l
+u=0
+n = len(r)
+r.append(s)
+    
+i = 0
+while r[i] != s:
+    u=u+1
+    i += 1
+r.pop()
+    
+if i < n:
+    result= i
+else:
+    result = -1
+
+if result != -1:
+    print("Target value ",s,"found at index ",i)
+else:
+    print("Target value ",s," not found")
+
+print("No. of step count are",u)
