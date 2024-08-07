@@ -39,45 +39,27 @@ for i in range (r2):
         if(mat2[i][j]!=0):
             smat2.append([i,j,mat2[i][j]])
 
-tmat1=smat1
-tmat2=smat2
-for i in range (1,len(smat1)):
-    tmat1[i][0],tmat1[i][1]=tmat1[i][1],tmat1[i][0]
 
-for i in range (1,len(smat2)):
-    tmat2[i][0],tmat2[i][1]=tmat2[i][1],tmat2[i][0]
+tmat1=[[0]*3]*z
+tmat2=[[0]*3]*y
 
+a1=[0]*(c1)
+for i in range (1,z+1):
+    a1[smat1[i][1]]+=1
 
-del tmat1[0]
-del tmat2[0]
-tmat1=sorted(tmat1,key=lambda x:x[0])
-tmat2=sorted(tmat2,key=lambda x:x[0])
+a2=[0]*(c2)
+for i in range (1,y+1):
+    a2[smat2[i][1]]+=1
 
-tmat1=[[c1,r1,z]]+tmat1
-tmat2=[[c2,r2,y]]+tmat2
+x=a1[0]
+a1[0]=1
+for i in range (1,c1):
+    a1[i]=x+a1[i-1]
 
+x=a2[0]
+a2[0]=1
+for i in range (1,c2):
+    a2[i]=x+a2[i-1]
 
-
-print("Transpose of mat1 is = ")
-print(tmat1)
-print("Transpose of mat2 is = ")
-print(tmat2)
-
-
-sum1=smat2
-
-for i in range (1,len(sum1)):
-    for j in range (1,len(smat1)):
-        if(sum[i][0]==mat1[j][0]&sum[i][1]==mat1[j][1]):
-            sum[i][2]=sum[i][2]+mat1[j][2]
-
-sum2=smat1
-
-for i in range (1,len(sum2)):
-    for j in range (1,len(smat2)):
-        if(sum[i][0]==mat2[j][0]&sum[i][1]==mat2[j][1]):
-            sum[i][2]=sum[i][2]+mat2[j][2]
-            
-set1=sum1
-set2=sum2
-set3=set1+set2
+print(a1)
+print(a2)
