@@ -1,65 +1,168 @@
-mat1=[]
-mat2=[]
-r1=int(input("Enter the rows of first matrix = "))
-c1=int(input("Enter the colomns of first matrix = "))
-r2=int(input("Enter the rows of second matrix = "))
-c2=int(input("Enter the colomns of second matrix = "))
-z=0
-for i in range (r1):
-    x=[]
-    for j in range (c1):
-        a=int(input("ENTER for mat1 = "))
-        if(a!=0):
-            z+=1
-        x.append(a)
-    mat1.append(x)
+def sparseinput():
+    n=int(input("Enter the number of Rows: "))
+    m=int(input("Enter the number of Columns: "))
+    sp=[]
+    sp.append([n,m,0])
+    cnt=0
+    for i in range(0,n):
+        
+        for j in range (0,m):
+            # x=[]
+            val=int(input("Enter the  Value Number :"))
+            if(val!=0):
+                sp.append([i, j, val])
+                cnt+=1
+    sp[0][2]=cnt
+    return sp
 
-y=0
-for i in range (r2):
-    x=[]
-    for j in range (c2):
-        a=int(input("ENTER for mat2 = "))
-        if(a!=0):
-            y+=1
-        x.append(a)
-    mat2.append(x)
+def print_sparse_matrix(sp):
+    for i in range (0, len(sp)):
+        print(sp[i])
+    return
 
 
+def sparse_simple_transpose(sp):
+    n=sp[0][2]             
+    col=sp[0][1]           
+    sp2=[]
+    sp2.append([sp[0][1], sp[0][0], n])
 
-smat1=[[r1,c1,z]]
-smat2=[[r2,c2,y]]
-
-for i in range (r1):
-    for j in range (c1):
-        if(mat1[i][j]!=0):
-            smat1.append([i,j,mat1[i][j]])
-
-for i in range (r2):
-    for j in range (c2):
-        if(mat2[i][j]!=0):
-            smat2.append([i,j,mat2[i][j]])
+    for i in range (0, col):
+        for j in range (1, n):
+            if(sp[j][1]==i):
+                sp2.append([sp[j][1], sp[j][0], sp[j][2]])
+            
+    return sp2
 
 
-tmat1=[[0]*3]*z
-tmat2=[[0]*3]*y
+def sparse_fast_transpose(sp):
+    n=sp[0][2]             
+    col=sp[0][1]           
+    sp2=[[0,0,0]]*(n+1)
+    sp2[0]=[sp[0][1], sp[0][0], n]
 
-a1=[0]*(c1)
-for i in range (1,z+1):
-    a1[smat1[i][1]]+=1
+    arr=[0]*(col)
 
-a2=[0]*(c2)
-for i in range (1,y+1):
-    a2[smat2[i][1]]+=1
+    for i in range (1, n):
+        arr[sp[i][1]]+=1
+    
+   
+    arr2=[0]*col
+    arr2[0]=1
+    for i in range (1,col):
+       arr2[i]+=arr2[i-1]+ arr[i-1]
+   
+    for i in range (1,n+1):
+        sp2[arr2[sp[i][1]]]=[sp[i][1], sp[i][0], sp[i][2]]
+        arr2[sp[i][1]]+=1
+               
+    return sp2
 
-x=a1[0]
-a1[0]=1
-for i in range (1,c1):
-    a1[i]=x+a1[i-1]
+def addition_sparse_matrix(sp1, sp2):
+    p1=0
+    p2=0
+    sp3=[]
+    sp3.append([sp1[0][0], sp1[0][1],0])
 
-x=a2[0]
-a2[0]=1
-for i in range (1,c2):
-    a2[i]=x+a2[i-1]
+    while(p1<=sp1[0][2] and p2<=sp2[0][2]):
+        if(sp1[p1][0]==sp2[p2][0] and sp1[p1][1]==sp2[p2][1]):
+            sp3.append([sp1[p1][0], sp1[p1][1], (sp1[p1][2]+sp2[p2][2])])
+            p1+=1
+            p2+=1
+            sp3[0][2]+=1
+        
+        elif(sp1[p1][0]==sp2[p2][0]):
+            if(sp1[p1][1]>sp2[p2][1]):
+                sp3.append(sp2[p2])
+                p2+=1
+            else:
+                sp3.append(sp1[p1])
+                p1+=1
+            sp3[0][2]+=1
+        
+        elif(sp1[p1][0]>sp2[p2][0]) :
+            sp3.append(sp2[p2])
+            p2+=1
+            sp3[0][2]+=1
 
-print(a1)
-print(a2)
+        else:
+            sp3.append(sp1[p1])
+            p1+=1
+            sp3[0][2]+=1
+        
+    while(p1<= sp1[0][2]):
+        sp3.append(sp1[p1])
+        p1+=1
+        sp3[0][2]+=1
+
+    while(p2<= sp2[0][2]):
+        sp3.append(sp2[p2])
+        p2+=1
+        sp3[0][2]+=1
+    
+    del sp3[1]
+    sp3[0][2]-=1
+
+    return sp3
+
+
+            
+
+
+        
+
+
+
+
+
+def menu():
+    while True:
+        print("\nSparse Matrix Algorithm Menu")
+        print("1. Input Sparse Matrix")
+        print("2. Print Sparse Matrix")
+        print("3. Simple Transpose of Sparse Matrix")
+        print("4. Fast Transpose of Sparse Matrix")
+        print("5. Addition of Two Sparse Matrices")
+        print("6. Multiplication of Two Sparse Matrices")
+        print("7. Exit")
+        
+        choice = input("Enter your choice (1-7): ")
+        # sp=[[0,0,0]]
+        if choice == '1':
+            global sp 
+            sp= sparseinput()
+            print("Sparse Matrix Input Complete.")
+
+        elif choice == '2': 
+            print_sparse_matrix(sp)
+            
+        elif choice == '3':
+            sp_transposed = sparse_simple_transpose(sp)
+            print("\nSimple Transposed Sparse Matrix:")
+            print_sparse_matrix(sp_transposed)
+            
+        elif choice == '4':
+            sp_transposed = sparse_fast_transpose(sp)
+            print("\nFast Transposed Sparse Matrix:")
+            print_sparse_matrix(sp_transposed)
+        
+        elif choice == '5':
+            print("Input Sparse Matrix 1:")
+            sp1 = sparseinput()
+            print("Input Sparse Matrix 2:")
+            sp2 = sparseinput()
+            sp_sum = addition_sparse_matrix(sp1, sp2)
+            print("\nSum of Sparse Matrices:")
+            print_sparse_matrix(sp_sum)
+        
+       
+
+        elif choice == '7':
+            print("Exiting the program.")
+            break
+        
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+
+menu()
