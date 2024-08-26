@@ -79,3 +79,5 @@ else:
     print("Target value ",s," not found")
 
 print("No. of step count are",u)
+
+
