@@ -1,3 +1,4 @@
+import time
 r=[]
 l=r
 n=int(input("enter number of present students "))
@@ -11,6 +12,7 @@ for i in range (0,n):
 
 s=int(input("Enter the roll number of student to be cheacked"))
 print("#by linier search")
+start =time.time()
 f=0
 g=0
 for i in range (0,n):
@@ -21,10 +23,11 @@ for i in range (0,n):
         break
 if(f==0):
     print("Student was not present")
-
+end = time.time()
+print(end -start)
 print("No. of steps count = ",(g))
 print("#by binary search")
-
+start = time.time()
 r.sort()
 
 
@@ -50,13 +53,14 @@ if(result==1):
 else:
     print("Student was not present")
 
-
+end = time.time()
+print(end-start)
 print("No. of steps count = ", x)
 
 
 print("#by Sentinal Search")
 
-
+start = time.time()
 r=l
 u=0
 n = len(r)
@@ -77,7 +81,7 @@ if result != -1:
     print("Target value ",s,"found at index ",i)
 else:
     print("Target value ",s," not found")
-
+end = time.time()
+print(end-start)
 print("No. of step count are",u)
-
 
