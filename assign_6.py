@@ -73,15 +73,15 @@ for i in range (n):
     l.append(x)
 b=l
 k=n
-# sorted_list_bubble = bubblesort(l.copy()) 
-# print("Bubble Sort result:", sorted_list_bubble)
+sorted_list_bubble = bubblesort(l.copy()) 
+print("Bubble Sort result:", sorted_list_bubble)
 
-# sorted_list_selection = selection_sort(l.copy())  
-# print("Selection Sort result:", sorted_list_selection)
+sorted_list_selection = selection_sort(l.copy())  
+print("Selection Sort result:", sorted_list_selection)
 
-# a=l
-# insertion_sort(a)
-# print("Insersion Sort result:",a)
+a=l
+insertion_sort(a)
+print("Insersion Sort result:",a)
 
 
 shell_sort(b,k)
