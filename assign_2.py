@@ -25,7 +25,7 @@ for i in range (0,c):
 set1=set(A)
 set2=set(B)
 set3=set(C)
-print("Student play cricket and badminton = ",set1|set2)
+print("Student play cricket and badminton = ",set1&set2)
 
 print("students who play either cricket or badminton but not both are = ",(set1|set2)-(set1&set2))
 
