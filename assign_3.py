@@ -127,7 +127,7 @@ if(c1==r2):
     for i in range(0,r1):
         for j in range(0,len(mat1[0])):
             product = 0
-            for k in range(0,len(mat2[0])):
+            for k in range(0,len(mat2)):
                 product += mat1[i][k] * mat2[k][j]
             C[i][j] = product
     print("Multiplication of matrix is = ",C)
