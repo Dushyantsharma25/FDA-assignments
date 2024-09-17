@@ -29,7 +29,7 @@ g=1
 if(r1==c1):
     for i in range(0,r1):
         for j in range(0,c1):
-            if(i>=j):
+            if(i>j):
                 if(mat1[i][j]!=0):
                     g=0
                     break
