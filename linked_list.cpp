@@ -1,138 +1,178 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 class Node {
 public:
-    int PRN_NO;
-    string Name;
+    string position;
+    string name;
     Node *next;
 
-    
-    Node(int PRN_NO, const string &Name) {
-        this->PRN_NO = PRN_NO;
-        this->Name = Name;
-        this->next = nullptr;
-    }
-
-    
-    ~Node() {
-        
-        while (next != nullptr) {
-            Node* temp = next;
-            next = next->next;
-            delete temp;
+    public:
+        Node(string position,string name){
+            this->position=position;
+            this->name=name;
+            this->next=NULL;
         }
-    }
+    
+    
 };
 
-void addMembers(Node* head) {
-    int n;
-    cout << "Enter the number of members you want to add: ";
-    cin >> n;
-    Node* temp = head;
-
-    while (n > 0) {
-        string Name;
-        int PRN_NO;
-        cout << "Enter PRN_NO and Name: ";
-        cin >> PRN_NO >> Name;
-        temp->next = new Node(PRN_NO, Name);
-        temp = temp->next;
+void create__ll(Node* head,int n){
+    Node* mover = head;
+    string g,h;
+    while(n>1){
+        cout<<"Enter data position\n";
+        cin>>g;
+        cout<<"Enter data name\n";
+        cin>>h;
+        Node* temp = new Node(g,h);
+        mover->next=temp;
+        mover=temp;
         n--;
     }
 }
 
-void appendMember(Node* head) {
-    Node* temp = head;
-    while (temp->next != nullptr) {
-        temp = temp->next;
-    }
-    temp->next = new Node(763542, "NEW");
-}
-
-void displayMembers(const Node* head) {
-    const Node* temp = head;
-    int count = 0;
-    while (temp != nullptr) {
-        cout << "Member " << (count + 1) << ":" << endl;
-        cout << "PRN_NO: " << temp->PRN_NO << ", Name: " << temp->Name << endl;
-        temp = temp->next;
-        count++;
+void Display(Node* head){
+    Node* temp=head;
+    while(temp!=NULL){
+        cout<<temp->position<<" "<<temp->name<<" "<<"\n";
+        temp=temp->next;
     }
 }
 
-void countMembers(const Node* head) {
-    const Node* temp = head;
-    int count = 0;
-    while (temp != nullptr) {
-        count++;
-        temp = temp->next;
+void Number(Node* head){
+    int f=0;
+    Node* temp=head;
+    while(temp!=NULL){
+        f++;
+        temp=temp->next;
     }
-    cout << "Total number of students: " << count << endl;
+    cout<<"There are "<<f<<" Members in Pinnacle Club."<<"\n";
 }
 
-void deleteMember(Node* &head, const string &Name) {
-    Node* temp = head;
-    Node* prev = nullptr;
+void Reverse_Display(Node* head){
+    if (head == nullptr) {
+        return;
+    }
+    
+    Reverse_Display(head->next);
+    
+    cout<<head->position<<" "<<head->name<<"\n";
 
-    while (temp != nullptr) {
-        if (temp->Name == Name) {
-            if (prev == nullptr) { 
-                head = temp->next;
-            } else {
-                prev->next = temp->next;
-            }
-            delete temp;
-            cout << "Member deleted." << endl;
-            return;
+}
+
+void Delete_member(Node* head){
+    cout<<"Enter Name of Member To be Deleted:-\n";
+    string h;cin>>h;
+    Node* mover =head;
+    Node* temp=head;
+    while(mover!=NULL){
+        if(mover->name==h&&mover->position=="member"){
+            temp->next=mover->next;
+            delete mover;
+            cout<<"!!!!Member Succesfully Deleted!!!!";
+            break;
         }
-        prev = temp;
-        temp = temp->next;
+        mover=mover->next;
+        if(mover->name!=h){
+            temp=temp->next;
+        }
     }
-    cout << "Member not found." << endl;
 }
 
-int main() {
-    Node* head = new Node(323, "Na");
-    int choice;
-
-    do {
-        cout << "\nMenu:" << endl;
-        cout << "1. Add members" << endl;
-        cout << "2. Delete a member" << endl;
-        cout << "3. Display total number of students" << endl;
-        cout << "4. Display all members" << endl;
-        cout << "5. Exit" << endl;
-        cout << "Enter your choice: ";
-        cin >> choice;
-
-        switch (choice) {
-            case 1:
-                addMembers(head);
-                break;
-            case 2: {
-                string name;
-                cout << "Enter the name of the member to delete: ";
-                cin >> name;
-                deleteMember(head, name);
-                break;
-            }
-            case 3:
-                countMembers(head);
-                break;
-            case 4:
-                displayMembers(head);
-                break;
-            case 5:
-                cout << "Exiting..." << endl;
-                break;
-            default:
-                cout << "Invalid choice. Please try again." << endl;
+void Delete_secratory(Node* head){
+    cout<<"Enter Name of Secratory To be Deleted:-\n";
+    string h;cin>>h;
+    Node* mover =head;
+    Node* temp=head;
+    while(mover!=NULL){
+        if(mover->name==h){
+            temp->next=mover->next;
+            delete mover;
+            cout<<"!!!!Secratory Succesfully Deleted!!!!";
+            break;
         }
-    } while (choice != 5);
+        mover=mover->next;
+        if(mover->name!=h){
+            temp=temp->next;
+        }
+    }
+}
 
-  
-    delete head;
+void seceratory(Node* head){
+    Node* mover=head;
+    while(mover->next!=NULL){
+        mover=mover->next;
+    }
+    cout<<"Enter New Secratory Name\n";
+    string d;cin>>d;
+    Node* temp=new Node("Secratory",d);
+    mover->next=temp;
+}
 
+void president(Node* &head){
+    cout<<"Enter Name of New President\n";
+    string b;cin>>b;
+    Node* temp=new Node("President",b);
+    temp->next=head;
+    head->position="member";
+    head=temp;
+}
+
+void Delete_president(Node* head){
+    Node* temp=head;
+    head=head->next;
+    delete temp;
+    cout<<"President Succesfully Deleted. \n";
+    cout<<"!!!!Club cannot be without president!!!!\n";
+    president(head);
+}
+
+int main(){
+    cout<<"Enter number of elements in linked list\n";
+    int n;cin>>n;
+    string f,fn;
+    cout<<"Enter data position\n";
+    cin>>f;
+    cout<<"Enter data name\n";
+    cin>>fn;
+    Node* head=new Node(f,fn);
+    create__ll(head,n);
+    
+    while(true){
+        cout<<"\n\nChoose any Operation\n\n";
+        cout<<" 1. Add President\n";
+        cout<<" 2. Insert Secratory\n";
+        cout<<" 3. Delete President\n";
+        cout<<" 4. Delete Secratory\n";
+        cout<<" 5. Delete Member\n";
+        cout<<" 6. Number of Students in Club\n";
+        cout<<" 7. Display All Members\n";
+        cout<<" 8. Display All Members in Reverse Order\n";
+        cout<<" 10. EXIT\n";
+        int j;cin>>j;
+
+        if(j==1){
+            president(head);
+        }else if(j==2){
+            seceratory(head);
+        }else if(j==3){
+            Delete_president(head);
+        }else if(j==4){
+            Delete_secratory(head);
+        }else if(j==5){
+            Delete_member(head);
+        }else if(j==6){
+            Number(head);
+        }else if(j==7){
+            Display(head);
+        }else if(j==8){
+            Reverse_Display(head);
+        }else if(j==10){
+            break;
+        }else{
+            cout<<"\n\nEnter A Valid Option\n\n";
+        }
+    }
     return 0;
 }
