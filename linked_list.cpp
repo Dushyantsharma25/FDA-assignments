@@ -7,6 +7,7 @@ public:
     string name;
     Node *next;
 
+
     public:
         Node(string position,string name){
             this->position=position;
@@ -127,6 +128,14 @@ void Delete_president(Node* head){
     cout<<"!!!!Club cannot be without president!!!!\n";
     president(head);
 }
+void Concatinate(Node* head,Node* head1){
+    Node* temp=head1;
+    Node* mover=head;
+    while(mover->next!=NULL){
+        mover=mover->next;
+    }
+    mover->next=temp;
+}
 
 int main(){
     cout<<"Enter number of elements in linked list\n";
@@ -139,6 +148,7 @@ int main(){
     Node* head=new Node(f,fn);
     create__ll(head,n);
     
+    
     while(true){
         cout<<"\n\nChoose any Operation\n\n";
         cout<<" 1. Add President\n";
@@ -149,6 +159,7 @@ int main(){
         cout<<" 6. Number of Students in Club\n";
         cout<<" 7. Display All Members\n";
         cout<<" 8. Display All Members in Reverse Order\n";
+        cout<<" 9. Concatinate New List\n";
         cout<<" 10. EXIT\n";
         int j;cin>>j;
 
@@ -168,6 +179,15 @@ int main(){
             Display(head);
         }else if(j==8){
             Reverse_Display(head);
+        }else if(j==9){
+            cout<<"Enter total number of people to be concatinate\n";
+            int m;cin>>m;
+            cout<<"Enter president name of new list\n";
+            string g;cin>>g;
+            Node* head1=new Node("president",g);
+            create__ll(head1,m);
+            Concatinate(head,head1);
+
         }else if(j==10){
             break;
         }else{
