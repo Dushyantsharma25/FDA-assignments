@@ -1,7 +1,7 @@
 # FDA-assignments
 
 
-## Hey there , if you want to run codes on this repo,
+## Hey there , if you want to run codes of this repo,
 you can simply run this command for .py 
 
 for linux and mac :- 
