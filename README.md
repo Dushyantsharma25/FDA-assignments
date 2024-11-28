@@ -1,4 +1,4 @@
-# FDA-assignments
+# FDS-assignments
 
 
 ## Hey there , if you want to run codes of this repo,
